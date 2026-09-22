@@ -22,3 +22,13 @@ cmake --build build --parallel 2 2>&1 | tee build.log
 
 cat "$(find build -name '*.rej' | head -1)"
 grep -rn -i -E "Reversed|already applied|previously applied" build.log | head
+
+
+
+
+
+find build -name "*.rej" -delete
+find build -name "*.orig" -delete
+touch build/*boringssl*-prefix/src/*-stamp/*patch*
+cmake --build build --parallel 2 2>&1 | tee build.log
+
