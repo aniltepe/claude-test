@@ -1,3 +1,12 @@
 ls CMakePresets.json CMakeUserPresets.json 2>/dev/null
 grep -rn -i "ninja" --include=CMakeLists.txt --include='*.cmake' --include='*.json' . | grep -v "/build/" | head
 grep -rn -A25 "ExternalProject_Add" CMakeLists.txt | grep -i -E "curl|GENERATOR|CMAKE_ARGS|ninja"
+
+
+
+export PATH="$HOME/bin:$PATH"
+export CONFIG_SHELL=/var/jb/bin/sh
+export SHELL=/var/jb/bin/sh
+export CFLAGS="-target arm64-apple-ios15.0"
+export CXXFLAGS="-target arm64-apple-ios15.0"
+export LDFLAGS="-target arm64-apple-ios15.0"
