@@ -10,3 +10,10 @@ export SHELL=/var/jb/bin/sh
 export CFLAGS="-target arm64-apple-ios15.0"
 export CXXFLAGS="-target arm64-apple-ios15.0"
 export LDFLAGS="-target arm64-apple-ios15.0"
+
+
+rm -rf build/*curl*-prefix/src/*-build
+cmake -S . -B build -G "Unix Makefiles" \
+  -DCMAKE_MAKE_PROGRAM="$HOME/bin/make" \
+  -DCMAKE_INSTALL_PREFIX="$HOME/.local/curl-impersonate"
+cmake --build build --parallel 2 2>&1 | tee build.log
