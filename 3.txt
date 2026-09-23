@@ -1,0 +1,6 @@
+V=/var/mobile/py-nba/venv
+SO="$V/lib/python3.9/site-packages/_cffi_backend.cpython-39-darwin.so"
+vtool -set-build-version ios 15.0 15.0 -replace -output "$SO" "$SO"
+ldid -S "$SO"
+otool -l "$SO" | grep -A3 LC_BUILD_VERSION      # platform 2
+"$V/bin/python3" -c "import cffi; print(cffi.__version__)"
