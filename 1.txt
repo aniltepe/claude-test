@@ -41,3 +41,17 @@ grep -n -E "error:|Error [0-9]|FAILED:|No such file|not found|Permission denied|
 sed -n '<N-40>,<N+20>p' build.log
 
 
+
+cd ~/curl-impersonate
+MK="$(readlink -f ~/bin/make)"
+echo "$MK"
+sed -i "s|-DCMAKE_MAKE_PROGRAM=[^ ]*|-DCMAKE_MAKE_PROGRAM=$MK|" CMakeLists.txt
+grep -n "CMAKE_MAKE_PROGRAM" CMakeLists.txt
+
+cmake -S . -B build -DCMAKE_MAKE_PROGRAM="$MK"
+rm -f build/deps/build/curl/CMakeCache.txt
+rm -rf build/deps/build/curl/CMakeFiles
+rm -f build/curl-prefix/src/curl-stamp/curl-configure
+cmake --build build --parallel 2 2>&1 | tee build.log
+
+
