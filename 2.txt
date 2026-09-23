@@ -1,2 +1,11 @@
 ls ~/.local/curl-impersonate/lib | grep -i curl
 ls ~/.local/curl-impersonate/include/curl | head
+
+
+
+
+cd ~
+git clone https://github.com/lexiforest/curl_cffi
+cd curl_cffi
+cat libs.json
+sed -n '1,80p' scripts/build.py
