@@ -9,3 +9,11 @@ git clone https://github.com/lexiforest/curl_cffi
 cd curl_cffi
 cat libs.json
 sed -n '1,80p' scripts/build.py
+
+
+
+grep -n -E "include|Path\(.*libdir|extra_objects|extra_compile" scripts/build.py
+ls ~/.local/curl-impersonate/lib
+ls ~/.local/curl-impersonate/include
+
+
