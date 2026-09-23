@@ -1,0 +1,2 @@
+ls ~/.local/curl-impersonate/lib | grep -i curl
+ls ~/.local/curl-impersonate/include/curl | head
