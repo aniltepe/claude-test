@@ -17,3 +17,20 @@ ls ~/.local/curl-impersonate/lib
 ls ~/.local/curl-impersonate/include
 
 
+
+
+mkdir -p ~/.local/curl-cffi-libs
+cp ~/.local/curl-impersonate/lib/libcurl-impersonate.a ~/.local/curl-cffi-libs/
+cp -r ~/.local/curl-impersonate/include ~/.local/curl-cffi-libs/
+ls -R ~/.local/curl-cffi-libs | head
+
+
+
+
+
+cd ~/curl_cffi
+python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
+grep -n -E "Using .* to store|already downloaded|Downloading" ~/cffi-build.log
+
+
+
