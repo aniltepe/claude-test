@@ -54,4 +54,6 @@ rm -rf build/deps/build/curl/CMakeFiles
 rm -f build/curl-prefix/src/curl-stamp/curl-configure
 cmake --build build --parallel 2 2>&1 | tee build.log
 
+export CFLAGS="$CFLAGS -Wno-reserved-identifier"
+export CXXFLAGS="$CXXFLAGS -Wno-reserved-identifier"
 
