@@ -34,3 +34,21 @@ grep -n -E "Using .* to store|already downloaded|Downloading" ~/cffi-build.log
 
 
 
+
+SO=/var/jb/var/mobile/.local/lib/python3.9/site-packages/_cffi_backend.cpython-39-darwin.so
+otool -l "$SO" | grep -A3 -E "LC_BUILD_VERSION|LC_VERSION_MIN"
+
+export CFLAGS="-target arm64-apple-ios15.0"
+export CXXFLAGS="-target arm64-apple-ios15.0"
+export LDFLAGS="-target arm64-apple-ios15.0"
+
+python3 -m pip uninstall -y cffi
+python3 -m pip install --no-binary :all: --no-build-isolation --no-cache-dir -v cffi 2>&1 | tee ~/cffi-rebuild.log
+
+ldid -S "$SO"
+otool -l "$SO" | grep -A3 LC_BUILD_VERSION      # should now say iOS
+python3 -c "import cffi; print(cffi.__version__)"
+
+which vtool && vtool -set-build-version ios 15.0 15.0 -replace -output "$SO" "$SO" && ldid -S "$SO"
+
+
