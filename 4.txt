@@ -1,0 +1,18 @@
+cd ~/curl_cffi
+python3 - <<'EOF'
+import json, os, platform
+lib = os.path.expanduser("~/.local/curl-impersonate/lib")
+for f in ("libcurl-impersonate.4.dylib", "libcurl-impersonate.dylib"):
+    assert os.path.exists(f"{lib}/{f}"), f"missing {f}, found: {os.listdir(lib)}"
+m = platform.machine()
+archs = [a for a in json.load(open("libs.json")) if a.get("machine") != m]
+archs.insert(0, {"system": "Darwin", "machine": m, "pointer_size": 64,
+    "libdir": lib, "sysname": "macos",
+    "so_name": "libcurl-impersonate.4.dylib", "so_arch": "arm64"})
+json.dump(archs, open("libs.json", "w"), indent=4)
+print("libs.json entry set for", m)
+EOF
+sed -i 's/-lstdc++/-lc++/' scripts/build.py
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$HOME/.local/curl-impersonate/lib"
+rm -rf build curl_cffi.egg-info
+python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
