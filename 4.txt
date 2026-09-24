@@ -42,3 +42,28 @@ rm -rf build curl_cffi.egg-info
 python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
 
 
+
+mkdir -p ~/bin
+cat > ~/bin/ios-clang <<'EOF'
+#!/var/jb/bin/sh
+unset MACOSX_DEPLOYMENT_TARGET
+pending=
+for a do
+  shift
+  if [ -n "$pending" ]; then
+    pending=
+    case "$a" in *MacOSX*) continue ;; esac
+    set -- "$@" -isysroot "$a"
+    continue
+  fi
+  case "$a" in
+    -mmacosx-version-min=*|-isysroot*MacOSX*) continue ;;
+    -isysroot) pending=1; continue ;;
+  esac
+  set -- "$@" "$a"
+done
+exec /var/jb/usr/bin/clang -target arm64-apple-ios15.0 "$@"
+EOF
+chmod +x ~/bin/ios-clang
+
+
