@@ -22,3 +22,23 @@ python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
 export LDFLAGS="-L$HOME/.local/curl-impersonate/lib -Wl,-rpath,$HOME/.local/curl-impersonate/lib"
 echo "$LDFLAGS"
 
+
+
+
+cat > ~/ios-env.sh <<'EOF'
+unset MACOSX_DEPLOYMENT_TARGET
+export CC="$HOME/bin/ios-clang"
+export LDSHARED="$HOME/bin/ios-clang -bundle -undefined dynamic_lookup"
+export CFLAGS="-I$HOME/.local/curl-impersonate/include"
+export LDFLAGS="-L$HOME/.local/curl-impersonate/lib -Wl,-rpath,$HOME/.local/curl-impersonate/lib"
+EOF
+source ~/ios-env.sh
+
+"$CC" --version | grep Target                   # should print arm64-apple-ios15.0
+ls ~/.local/curl-impersonate/include/curl/curl.h
+
+cd ~/curl_cffi
+rm -rf build curl_cffi.egg-info
+python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
+
+
