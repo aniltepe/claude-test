@@ -16,3 +16,9 @@ sed -i 's/-lstdc++/-lc++/' scripts/build.py
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$HOME/.local/curl-impersonate/lib"
 rm -rf build curl_cffi.egg-info
 python3 -m pip install --no-build-isolation -v . 2>&1 | tee ~/cffi-build.log
+
+
+
+export LDFLAGS="-L$HOME/.local/curl-impersonate/lib -Wl,-rpath,$HOME/.local/curl-impersonate/lib"
+echo "$LDFLAGS"
+
