@@ -1,0 +1,7 @@
+python -c 'import sys; print(sys.executable, sys.prefix)'
+venv/bin/python -c 'import sys; print(sys.executable, sys.prefix)'
+"$VIRTUAL_ENV/bin/python" -c 'import sys; print(sys.executable, sys.prefix)'
+ls -l venv/bin/python*
+env | grep -i python
+
+
