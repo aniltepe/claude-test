@@ -5,3 +5,10 @@ ls -l venv/bin/python*
 env | grep -i python
 
 
+
+
+export CFLAGS="-I$HOME/.local/curl-impersonate/include"
+export LDFLAGS="-L$HOME/.local/curl-impersonate/lib"
+cd ~/curl_cffi
+pip install --no-build-isolation -v .
+find /var/mobile/py-nba/venv -name "*.so" -exec ldid -S {} \;
