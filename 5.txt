@@ -52,3 +52,12 @@ export PATH=$HOME/xslt/bin:$PATH
 cd ~/py-nba && pip install --no-binary lxml lxml
 
 
+
+
+
+cd ~/py-nba
+source venv/bin/activate
+export PATH=$HOME/xslt/bin:$PATH
+LDSHARED="cc -bundle -undefined dynamic_lookup" pip install --no-binary lxml lxml
+
+
