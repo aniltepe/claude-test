@@ -12,3 +12,13 @@ export LDFLAGS="-L$HOME/.local/curl-impersonate/lib"
 cd ~/curl_cffi
 pip install --no-build-isolation -v .
 find /var/mobile/py-nba/venv -name "*.so" -exec ldid -S {} \;
+
+
+
+SP=$(python -c 'import site; print(site.getsitepackages()[0])')
+cat > "$SP/zz_binsh.pth" <<'EOF'
+import subprocess as s; _o=s.Popen.__init__; s.Popen.__init__=lambda self,*a,**k: _o(self,*a,**(dict(k, executable=k.get('executable') or '/var/jb/bin/sh') if k.get('shell') else k))
+EOF
+
+pip install --no-binary lxml --no-build-isolation lxml
+python -c "from lxml import etree; print(etree.LXML_VERSION)"
