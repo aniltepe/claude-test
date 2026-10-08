@@ -39,3 +39,16 @@ ls /var/jb/usr/include | grep -i xslt
 ls /var/jb/usr/lib | grep -i xslt
 
 
+
+
+cd ~
+curl -LO https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.43.tar.xz
+tar xf libxslt-1.1.43.tar.xz && cd libxslt-1.1.43
+CONFIG_SHELL=/var/jb/bin/sh /var/jb/bin/sh ./configure --prefix=$HOME/xslt --without-python --without-crypto
+make SHELL=/var/jb/bin/sh
+make SHELL=/var/jb/bin/sh install
+
+export PATH=$HOME/xslt/bin:$PATH
+cd ~/py-nba && pip install --no-binary lxml lxml
+
+
