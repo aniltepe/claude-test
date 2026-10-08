@@ -32,3 +32,10 @@ sudo cp "$PYLIB" "$PYLIB.bak"
 sudo sed -i "s#'/bin/sh'#'/var/jb/bin/sh'#" "$PYLIB"
 grep -n "/var/jb/bin/sh" "$PYLIB"
 
+
+
+
+ls /var/jb/usr/include | grep -i xslt
+ls /var/jb/usr/lib | grep -i xslt
+
+
