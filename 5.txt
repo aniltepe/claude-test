@@ -22,3 +22,13 @@ EOF
 
 pip install --no-binary lxml --no-build-isolation lxml
 python -c "from lxml import etree; print(etree.LXML_VERSION)"
+
+
+
+
+PYLIB=$(python -c 'import subprocess; print(subprocess.__file__)')
+grep -n "'/bin/sh'" "$PYLIB"
+sudo cp "$PYLIB" "$PYLIB.bak"
+sudo sed -i "s#'/bin/sh'#'/var/jb/bin/sh'#" "$PYLIB"
+grep -n "/var/jb/bin/sh" "$PYLIB"
+
